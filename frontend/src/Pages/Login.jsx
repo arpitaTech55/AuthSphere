@@ -45,7 +45,7 @@ function Login() {
           navigate("/home");
         }, 1000);
       } else if (error) {
-        const details = error?.details[0].message;
+        const details = error?.details?.[0]?.message || error?.message || "Login failed";
         handleError(details);
       } else if (!success) {
         handleError(message);

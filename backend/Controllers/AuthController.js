@@ -27,14 +27,14 @@ const login = async (req, res) => {
     const user = await UserModel.findOne({ email });
     const errorMsg = "Authentication falied , email or password is wrong";
     if (!user) {
-      return res.status(500).json({
+      return res.status(401).json({
         message: errorMsg,
         success: false,
       });
     }
     const isPassEqual = await bcrypt.compare(password, user.password);
     if (!isPassEqual) {
-      return res.status(500).json({
+      return res.status(401).json({
         message: errorMsg,
         success: false,
       });
@@ -55,7 +55,7 @@ const login = async (req, res) => {
         name: user.name,
       });
   } catch (err) {
-    res.status(401).json({ message: "Internal server error", success: false });
+    res.status(500).json({ message: "Internal server error", success: false });
   }
 };
 module.exports = { signup, login };
